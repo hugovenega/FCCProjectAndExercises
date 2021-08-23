@@ -1,13 +1,10 @@
 function palindrome(str) {
   const regex =/\W|_/gi;
   let strRemplaced = str.replace(regex, "");
-  let strTrimed = strRemplaced.toUpperCase().trim();
-    console.log(strTrimed);
-  let strSplited = strTrimed.split("");
+  let strUpperCase = strRemplaced.toUpperCase();
+  let strSplited = strUpperCase.split("");
   let strJoined = strSplited.reverse().join("");
-    console.log(strJoined);
-  return (strJoined == strTrimed ? true : false);
+  return (strJoined == strUpperCase ? true : false);
 
 }
-console.log(palindrome("not a palindrome"));
-console.log([2,3,4].reverse());
+console.log(palindrome("Ana na"));

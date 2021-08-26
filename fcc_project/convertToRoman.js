@@ -1,59 +1,67 @@
+/* eslint-disable default-case */
 function convertToRoman(num) {
-  let preRoman = [];
-  let roman= [];
-  do { /* separate the number into units*/
+  const preRoman = [];
+  const roman = [];
+  if (num > 3999) {
+    return 'exceeds the maximum allowed which is 3999';
+  }
+  if (num < 1) {
+    return 'The minimum to convert to a Roman numeral is 1';
+  }
+  do {
+    // separate the number into units
     preRoman.push(num % 10);
-    num = Math.trunc(num /10);
-  } while(num !== 0);
-  /*With the factory function it translates the unit with its respective Roman symbols assigned in its call.*/
-  const factory = function(num, hi, med, low) {
-    let element = [];
-    let unit = num;
-    if (unit == 9) {
-      element.push(low,hi);
+    num = Math.trunc(num / 10);
+  } while (num !== 0);
+  // the factory function it translates the unit its respective Roman symbol assigned in its call
+  const factory = function (numb, hi, med, low) {
+    const element = [];
+    let unit = numb;
+    if (unit === 9) {
+      element.push(low, hi);
       unit = 0;
     }
     if (unit >= 5) {
       element.push(med);
-      unit -= 5; 
-      while (unit != 0) {
+      unit -= 5;
+      while (unit !== 0) {
         element.push(low);
         unit -= 1;
       }
     }
-    if (unit == 4) {
-      element.push(low,med);
+    if (unit === 4) {
+      element.push(low, med);
       unit -= 4;
     } else {
-      while (unit != 0) {
+      while (unit !== 0) {
         element.push(low);
         unit -= 1;
-     }
-  }
-    return element.join("");
-  }
-
-  for (let i = preRoman.length; i > 0; i--){
+      }
+    }
+    return element.join('');
+  };
+  for (let i = preRoman.length; i > 0; i -= 1) {
     switch (i) {
       case 4:
         let unitThousand = preRoman.pop();
-        while (unitThousand != 0) {
-          roman.push("M");
-          unitThousand -= 1;}
-        break
+        while (unitThousand !== 0) {
+          roman.push('M');
+          unitThousand -= 1;
+        }
+        break;
       case 3:
-        roman.push(factory(preRoman.pop(),"M", "D", "C"));
+        roman.push(factory(preRoman.pop(), 'M', 'D', 'C'));
         break;
       case 2:
-        roman.push(factory(preRoman.pop(),"C", "L", "X"));
+        roman.push(factory(preRoman.pop(), 'C', 'L', 'X'));
         break;
       case 1:
-        roman.push(factory(preRoman.pop(),"X", "V", "I"));
+        roman.push(factory(preRoman.pop(), 'X', 'V', 'I'));
         break;
     }
   }
-  ;
-  return roman.join("");
- }
- 
- console.log(convertToRoman(3999));
+
+  return roman.join('');
+}
+
+module.exports = convertToRoman;

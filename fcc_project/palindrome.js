@@ -1,10 +1,18 @@
 function palindrome(str) {
-  const regex =/\W|_/gi;
-  let strRemplaced = str.replace(regex, "");
-  let strUpperCase = strRemplaced.toUpperCase();
-  let strSplited = strUpperCase.split("");
-  let strJoined = strSplited.reverse().join("");
-  return (strJoined == strUpperCase ? true : false);
+  const regex = /\W|_/gi;
+  // const strRemplaced = str.replace(regex, '');
+  // const strUpperCase = strRemplaced.toUpperCase();
+  // const strSplited = strUpperCase.split('');
+  // const strJoined = strSplited.reverse().join('');
 
+  const firstPart = str
+    .replace(regex, '')
+    .toUpperCase();
+  const secondPart = firstPart
+    .split('')
+    .reverse()
+    .join('');
+
+  return (firstPart === secondPart);
 }
-console.log(palindrome("Ana na"));
+console.log(palindrome('Sopa apos'));

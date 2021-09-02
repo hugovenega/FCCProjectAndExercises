@@ -98,12 +98,12 @@ describe('Fraction with 0', () => {
 
   it('should solve logarithm for 0 in neperian base and return "Not defined"', () => {
     const a = new Fraction(0, 3);
-    expect(a.log()).toEqual("Not defined");
+    expect(a.log()).toEqual('Not defined');
   });
 
   it('should solve logarithm for 0 in base 4 and return "Not defined"', () => {
     const a = new Fraction(0, 3);
-    expect(a.log(4)).toEqual("Not defined");
+    expect(a.log(4)).toEqual('Not defined');
   });
 });
 
@@ -111,6 +111,6 @@ describe('Fraction with power using Fractions', () => {
   it('should power a fraction with a fraction', () => {
     const a = new Fraction(3, 4);
     const b = new Fraction(1, 2);
-    expect(a.pow(b)).toEqual(new Fraction (1.7320508075688772, 2));
+    expect(a.pow(b)).toEqual(new Fraction(1.7320508075688772, 2));
   });
 });

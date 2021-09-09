@@ -42,8 +42,7 @@ function checkCashRegister(price, cash, cid) {
   } else {
     status = 'OPEN';
   }
-  return { 'status': status, 'change': change };
+  return { status, change };
 }
 
-module.exports = checkCashRegister;
 module.exports = checkCashRegister;

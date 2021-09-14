@@ -1,67 +1,56 @@
-/* eslint-disable default-case */
+const arrayRomanSymbols = [
+  ['X', 'V', 'I'], // Roman symbols to represent unity
+  ['C', 'L', 'X'], // Roman symbols to represent unity of ten
+  ['M', 'D', 'C'], // Roman symbols to represent unity of hundred
+  ['', '', 'M'], // Roman symbols to represent unity of thousand
+];
+function convertNumberToRomanSymbols(number, arrayWithUnitySymbols) {
+  const [highestNumberSymbol, mediumNumberSymbol, lowestNumberSymbol] = arrayWithUnitySymbols;
+  const SymbolsToConcat = [];
+  let unit = number;
+  if (unit === 9) {
+    SymbolsToConcat.push(lowestNumberSymbol, highestNumberSymbol);
+    unit = 0;
+  }
+  if (unit >= 5) {
+    SymbolsToConcat.push(mediumNumberSymbol);
+    unit -= 5;
+  }
+  if (unit === 4) {
+    SymbolsToConcat.push(lowestNumberSymbol, mediumNumberSymbol);
+    unit -= 4;
+  } else {
+    while (unit !== 0) {
+      SymbolsToConcat.push(lowestNumberSymbol);
+      unit -= 1;
+    }
+  }
+  return SymbolsToConcat.join('');
+}
+
 function convertToRoman(num) {
-  const preRoman = [];
-  const roman = [];
-  if (num > 3999) {
+  const numbersSplitByUnit = [];
+  let number = num;
+  const romanSymbols = [];
+  if (number > 3999) {
     return 'exceeds the maximum allowed which is 3999';
   }
-  if (num < 1) {
+  if (number < 1) {
     return 'The minimum to convert to a Roman numeral is 1';
   }
   do {
     // separate the number into units
-    preRoman.push(num % 10);
-    num = Math.trunc(num / 10);
-  } while (num !== 0);
-  // the factory function it translates the unit its respective Roman symbol assigned in its call
-  const factory = function (numb, hi, med, low) {
-    const element = [];
-    let unit = numb;
-    if (unit === 9) {
-      element.push(low, hi);
-      unit = 0;
-    }
-    if (unit >= 5) {
-      element.push(med);
-      unit -= 5;
-      while (unit !== 0) {
-        element.push(low);
-        unit -= 1;
-      }
-    }
-    if (unit === 4) {
-      element.push(low, med);
-      unit -= 4;
-    } else {
-      while (unit !== 0) {
-        element.push(low);
-        unit -= 1;
-      }
-    }
-    return element.join('');
-  };
-  for (let i = preRoman.length; i > 0; i -= 1) {
-    switch (i) {
-      case 4:
-        let unitThousand = preRoman.pop();
-        while (unitThousand !== 0) {
-          roman.push('M');
-          unitThousand -= 1;
-        }
-        break;
-      case 3:
-        roman.push(factory(preRoman.pop(), 'M', 'D', 'C'));
-        break;
-      case 2:
-        roman.push(factory(preRoman.pop(), 'C', 'L', 'X'));
-        break;
-      case 1:
-        roman.push(factory(preRoman.pop(), 'X', 'V', 'I'));
-        break;
-    }
+    numbersSplitByUnit.push(number % 10);
+    number = Math.trunc(number / 10);
+  } while (number !== 0);
+
+  for (let i = 0; i < numbersSplitByUnit.length; i += 1) {
+    romanSymbols.push(convertNumberToRomanSymbols(numbersSplitByUnit[i], arrayRomanSymbols[i]));
   }
 
-  return roman.join('');
+  return romanSymbols
+    .reverse()
+    .join('');
 }
 
 module.exports = convertToRoman;

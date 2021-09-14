@@ -1,14 +1,20 @@
-function palindrome(str) {
-  const regex = /\W|_/gi;
-  const firstPart = str
-    .replace(regex, '')
-    .toUpperCase();
-  const secondPart = firstPart
-    .split('')
+const NOT_A_LETTER_OR_NUMBER = /\W|_/gi;
+
+function reverseString(str) {
+  return str.split('')
     .reverse()
     .join('');
+}
 
-  return (firstPart === secondPart);
+function removeNotValidCharacters(str) {
+  return str
+    .replace(NOT_A_LETTER_OR_NUMBER, '')
+    .toUpperCase();
+}
+
+function palindrome(str) {
+  const cleanedString = removeNotValidCharacters(str);
+  return cleanedString === reverseString(cleanedString);
 }
 
 module.exports = palindrome;

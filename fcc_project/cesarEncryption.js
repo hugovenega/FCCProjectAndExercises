@@ -1,19 +1,37 @@
-function rot13(str) {
-  const strPLetter = str.split('');
-  const getCodeLetters = function(letter) {
-    if ((letter.charCodeAt(0) < 65) || (letter.charCodeAt(0) > 90)) {
-      return (letter.charCodeAt(0));
-    } if ((letter.charCodeAt(0) - 13) < 65) {
-      const rest = (65 - (letter.charCodeAt(0) - 12));
-      return (90 - rest);
-    }
-    return (letter.charCodeAt(0) - 13);
-  };
-  const getNewLetters = function(code) {
-    return String.fromCharCode(code);
-  };
-  const arrayCodes = strPLetter.map((letter) => getCodeLetters(letter));
-  const arrayNewLetters = arrayCodes.map((code) => getNewLetters(code));
-  return arrayNewLetters.join('');
+const A_ASCII = 65;
+const Z_ASCII = 90;
+const ROT = 13;
+
+function fromCodeToLetter(code) {
+  return String.fromCharCode(code);
 }
-module.exports = rot13;
+
+function letterOutOfRange(letter) {
+  return letter < A_ASCII || letter > Z_ASCII;
+}
+
+function fromLetterToCode(letter) {
+  return letter.charCodeAt(0);
+}
+
+function rotate(letterCode) {
+  if (letterOutOfRange(letterCode)) {
+    return letterCode;
+  }
+  if (letterCode - ROT < A_ASCII) {
+    const rest = A_ASCII - letterCode + ROT - 1;
+    return Z_ASCII - rest;
+  }
+  return letterCode - ROT;
+}
+
+function cesarEncryption(str) {
+  return str
+    .split('')
+    .map(fromLetterToCode)
+    .map(rotate)
+    .map(fromCodeToLetter)
+    .join('');
+}
+
+module.exports = cesarEncryption;

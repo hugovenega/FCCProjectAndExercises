@@ -2,35 +2,30 @@ const palindrome = require('./palindrome');
 
 describe('palindrome', () => {
   describe('words that are palindromes', () => {
-    const palindromes = ['Taco Cat', 'Noon', 'Aibohphobia'];
-    palindromes.forEach((word) => {
+    const palindromesWords = ['Taco Cat', 'Noon', 'Aibohphobia'];
+    palindromesWords.forEach((word) => {
       it(`should return true for valid palindrome: ${word}`, () => {
         expect(palindrome(word)).toBe(true);
       });
     });
   });
+
+  describe('texts and words that are palindromes using non-alphanumeric symbols', () => {
+    const palindromesTextsAndWordsWithAlphanumerics = ['Mr. Owl ate my metal worm', 'Eva, can I stab bats in a cave?', 'E$$y?!e'];
+    palindromesTextsAndWordsWithAlphanumerics.forEach((word) => {
+      it(`should return true for valid palindrome: ${word}`, () => {
+        expect(palindrome(word)).toBe(true);
+      });
+    });
+  });
+
+  describe('texts and words that are not palindromes', () => {
+    const notPalindromes = ['Spectator', 'Cinema', 'In the real Academy'];
+    notPalindromes.forEach((word) => {
+      it(`should return false for valid palindrome: ${word}`, () => {
+        expect(palindrome(word)).toBe(false);
+      });
+    });
+  });
 });
 
-describe.skip('testing with words and texts that are palindromes using non-alphanumeric symbols', () => {
-  it('E$$y?!e = true', () => {
-    expect(palindrome('E$$y?!e')).toBe(true);
-  });
-  it('Mr. Owl ate my metal worm = true', () => {
-    expect(palindrome('Mr. Owl ate my metal worm')).toBe(true);
-  });
-  it('Eva, can I stab bats in a cave? = true', () => {
-    expect(palindrome('Eva, can I stab bats in a cave?')).toBe(true);
-  });
-});
-
-describe.skip('testing with words and texts that are not palindromes', () => {
-  it('Spectator = false', () => {
-    expect(palindrome('Spectator')).toBe(false);
-  });
-  it('Example', () => {
-    expect(palindrome('Example = false')).toBe(false);
-  });
-  it('in the real academy = false', () => {
-    expect(palindrome('in the real academy')).toBe(false);
-  });
-});

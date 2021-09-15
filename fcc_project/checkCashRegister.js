@@ -1,48 +1,46 @@
 const conversionRate = {
-  'ONE HUNDRED': 100,
-  TWENTY: 20,
-  TEN: 10,
-  FIVE: 5,
-  ONE: 1,
-  QUARTER: 0.25,
-  DIME: 0.1,
-  NICKEL: 0.05,
   PENNY: 0.01,
+  NICKEL: 0.05,
+  DIME: 0.10,
+  QUARTER: 0.25,
+  ONE: 1.00,
+  FIVE: 5.00,
+  TEN: 10.00,
+  TWENTY: 20.00,
+  'ONE HUNDRED': 100.00,
 };
 
 function checkCashRegister(price, cash, cid) {
-  let changeSum = parseFloat((cash - price).toFixed(2));
-  const changeSumCheck = changeSum;
-  let change = [];
-  let status = '';
-
-  let totalInCid = 0;
-  const filteredCid = cid.filter((elem) => elem[1] !== 0).reverse();
-
-  filteredCid.forEach((element) => {
-    const coin = element[0];
-    let coinSum = element[1];
-    totalInCid += coinSum;
-    let amount = 0;
-    while (changeSum >= conversionRate[coin] && coinSum > 0) {
-      amount += conversionRate[coin];
-      changeSum -= conversionRate[coin];
-      coinSum -= conversionRate[coin];
-    }
-    if (amount !== 0) {
-      change.push([coin, amount]);
-    }
-  });
-  if (changeSum > 0) {
-    status = 'INSUFFICIENT_FOUNDS';
-    change = [];
-  } else if (changeSum === 0 && changeSumCheck === totalInCid) {
-    status = 'CLOSED';
-    change = cid;
-  } else {
-    status = 'OPEN';
+  let totalCID = 0;
+  for (const element of cid) {
+    totalCID += element[1];
   }
-  return { status, change };
-}
+  totalCID = totalCID.toFixed(2);
+  let changeToGive = cash - price;
+  const changeArray = [];
+  if (changeToGive > totalCID) {
+    return { status: 'INSUFFICIENT_FUNDS', change: changeArray };
+  } if (changeToGive.toFixed(2) === totalCID) {
+    return { status: 'CLOSED', change: cid };
+  }
+  const cidReversed = cid.reverse();
+  for (const elem of cidReversed) {
+    const temp = [elem[0], 0];
+    while (changeToGive >= conversionRate[elem[0]] && elem[1] > 0) {
+      temp[1] += conversionRate[elem[0]];
+      elem[1] -= conversionRate[elem[0]];
+      changeToGive -= conversionRate[elem[0]];
+      changeToGive = changeToGive.toFixed(2);
+    }
+    if (temp[1] > 0) {
+      changeArray.push(temp);
+    }
+  }
+
+  if (changeToGive > 0) {
+    return { status: 'INSUFFICIENT_FUNDS', change: [] };
+  }
+  return { status: 'OPEN', change: changeArray };
+};
 
 module.exports = checkCashRegister;

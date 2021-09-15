@@ -12,9 +12,11 @@ const conversionRate = {
 
 function checkCashRegister(price, cash, cid) {
   let totalCID = 0;
-  for (const element of cid) {
-    totalCID += element[1];
-  }
+
+  cid.forEach((elem) =>{
+    totalCID += elem[1];
+  });
+
   totalCID = totalCID.toFixed(2);
   let changeToGive = cash - price;
   const changeArray = [];
@@ -24,7 +26,8 @@ function checkCashRegister(price, cash, cid) {
     return { status: 'CLOSED', change: cid };
   }
   const cidReversed = cid.reverse();
-  for (const elem of cidReversed) {
+
+  cidReversed.forEach(elem => {
     const temp = [elem[0], 0];
     while (changeToGive >= conversionRate[elem[0]] && elem[1] > 0) {
       temp[1] += conversionRate[elem[0]];
@@ -35,12 +38,12 @@ function checkCashRegister(price, cash, cid) {
     if (temp[1] > 0) {
       changeArray.push(temp);
     }
-  }
+  });
 
   if (changeToGive > 0) {
     return { status: 'INSUFFICIENT_FUNDS', change: [] };
   }
   return { status: 'OPEN', change: changeArray };
-};
+}
 
 module.exports = checkCashRegister;

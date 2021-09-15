@@ -1,4 +1,4 @@
-const checkCashRegister = require('./box');
+const checkCashRegister = require('./checkCashRegister');
 
 describe('checkCashRegister', () => {
   describe(`return status: 

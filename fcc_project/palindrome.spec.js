@@ -22,7 +22,7 @@ describe('palindrome', () => {
   describe('texts and words that are not palindromes', () => {
     const notPalindromes = ['Spectator', 'Cinema', 'In the real Academy'];
     notPalindromes.forEach((word) => {
-      it(`should return false for valid palindrome: ${word}`, () => {
+      it(`should return false for invalid palindrome: ${word}`, () => {
         expect(palindrome(word)).toBe(false);
       });
     });
